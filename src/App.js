@@ -1,33 +1,49 @@
 import React, {Component} from 'react';
+import Data from './Data';
+import App2 from './App2';
 import './App.css';
 
 class App extends Component {
-
   state = {
-    count: 10
+    deaths: null,
+    confirmed: null,
+    recovered: null,
+    loading: true
   };
 
-  componentDidMount() {
-    console.log('hola mundo');
+  async componentDidMount() {
+    try {
+      const response = await fetch('https://enrichman.github.io/covid19/world/full.json');
+      const data = await response.json();
+      this.setState({
+        deaths: data.deaths,
+        confirmed: data.confirmed,
+        recovered: data.recovered,
+        loading: false
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   componentWillUnmount() {
     console.log('will unmount');
   }
 
-  handleInput = event => {
-    const value = event.target.value;
-    this.setState({count: value});
-  }
-
   render() {
+    if (this.state.loading) {
+      return <div>Cargando los datos de hoy...</div>;
+    }
     return (
       <>
-        <div>El valor del contador es: {this.state.count}</div>
-        <input type="text" onChange={this.handleInput} ></input>
+        <Data
+          confirmed={this.state.confirmed}
+          deaths={this.state.deaths}
+          recovered={this.state.recovered}
+        />
+        <App2 />
       </>
-
-    )
+    );
   }
 }
 
