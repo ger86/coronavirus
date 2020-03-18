@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Data from './components/Data';
-import FlexContainer from './components/UI/FlexContainer';
+import Data from 'components/UI/Data';
+import FlexContainer from 'components/UI/FlexContainer';
 
 const DataList = ({deaths, confirmed, recovered}) => (
   <FlexContainer>

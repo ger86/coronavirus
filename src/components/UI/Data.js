@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ThemeContext from 'ThemeContext';
+import ThemeContext from 'contexts/ThemeContext';
 
 const DataContainer = styled.div`
   color: ${props => props.theme.color};
@@ -15,13 +15,14 @@ const Number = styled.p`
 
 const Data = ({number, title}) => {
   const theme = useContext(ThemeContext);
-  
+
   return (
-  <DataContainer theme={theme}>
-    <Number>{number}</Number>
-    <div>{title}</div>
-  </DataContainer>
-)};
+    <DataContainer theme={theme}>
+      <Number>{number}</Number>
+      <div>{title}</div>
+    </DataContainer>
+  );
+};
 
 Data.propTypes = {
   number: PropTypes.number.isRequired,
