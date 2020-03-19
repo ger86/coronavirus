@@ -2,13 +2,14 @@ import React, {useState, lazy, Suspense} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import styled from 'styled-components';
 import MainMenu from 'components/UI/MainMenu';
-import {home, spain} from 'conf/routes';
+import {contact, home, spain} from 'conf/routes';
 import ThemeContext from 'contexts/ThemeContext';
 import {darkTheme, lightTheme} from './styles/theme';
 import 'styles/App.css';
 
 const Home = lazy(() => import('components/screens/Home'));
 const Spain = lazy(() => import('components/screens/Spain'));
+const Contact = lazy(() => import('components/screens/Contact'));
 
 const MainContainer = styled.div`
   background-color: ${props => props.theme.backgroundColor};
@@ -32,6 +33,9 @@ export default function App() {
               <Switch>
                 <Route path={spain()}>
                   <Spain />
+                </Route>
+                <Route path={contact()}>
+                  <Contact />
                 </Route>
                 <Route path={home()}>
                   <Home />

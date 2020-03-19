@@ -5,3 +5,7 @@ export function home() {
 export function spain() {
   return '/spain';
 }
+
+export function contact() {
+  return '/contact';
+}
