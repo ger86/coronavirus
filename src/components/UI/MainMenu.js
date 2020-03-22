@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {contact, home, spain} from 'conf/routes';
+import {contact, formikContact, home, spain} from 'conf/routes';
 
 const MainMenu = ({onClickChangeThemeButton}) => (
   <nav>
@@ -14,6 +14,9 @@ const MainMenu = ({onClickChangeThemeButton}) => (
       </li>
       <li>
         <Link to={contact()}>Contacto</Link>
+      </li>
+      <li>
+        <Link to={formikContact()}>Contacto con Formik</Link>
       </li>
       <li>
         <button onClick={onClickChangeThemeButton}>Cambiar tema</button>
