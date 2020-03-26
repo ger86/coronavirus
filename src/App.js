@@ -1,10 +1,13 @@
-import React, {useState, lazy, Suspense} from 'react';
+import React, {useEffect, useState, lazy, Suspense} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styled, {ThemeProvider} from 'styled-components';
 import MainMenu from 'components/UI/MainMenu';
 import RequireAuth from 'components/RequireAuth';
 import {contact, formikContact, home, login, logout, spain} from 'conf/routes';
 import {darkTheme, lightTheme} from 'styles/theme';
+import useCoronavirusData from 'hooks/useCoronavirusData';
+import {SET_GLOBAL_DATA} from 'reducer';
 import GlobalStyle from 'styles/GlobalStyle';
 
 const Home = lazy(() => import('components/screens/Home'));
@@ -20,10 +23,25 @@ const MainContainer = styled.div`
 
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const {data} = useCoronavirusData('/full.json');
+  const dispatch = useDispatch();
 
   const handleChangeTheme = () => {
     setIsDarkTheme(oldValue => !oldValue);
   };
+
+  useEffect(() => {
+    if (data) {
+      dispatch({
+        type: SET_GLOBAL_DATA,
+        data: {
+          confirmed: data.confirmed,
+          deaths: data.deaths,
+          recovered: data.recovered
+        }
+      });
+    }
+  }, [data, dispatch]);
 
   const currentTheme = isDarkTheme ? darkTheme : lightTheme;
   return (
@@ -38,7 +56,7 @@ export default function App() {
                 <Switch>
                   <Route
                     path={spain()}
-                    component={props => <RequireAuth {...props} Component={Spain} />}
+                    render={props => <RequireAuth {...props} Component={Spain} />}
                   />
                   <Route path={contact()}>
                     <Contact />
@@ -48,7 +66,7 @@ export default function App() {
                   </Route>
                   <Route
                     path={home()}
-                    component={props => <RequireAuth {...props} Component={Home} />}
+                    render={props => <RequireAuth {...props} Component={Home} />}
                   />
                   <Route path={logout()}>
                     <Logout />
